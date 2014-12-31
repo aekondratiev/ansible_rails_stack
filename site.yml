@@ -1,0 +1,30 @@
+---
+# This playbook deploys the whole application stack in this site.
+
+- name: apply common configuration to all nodes
+  hosts: all
+  remote_user: root
+
+  roles:
+    - common
+
+- name: configure and deploy the webserver and development environment
+  hosts: webserver
+  remote_user: root
+
+  roles:
+    - web
+
+- name: deploy PostgreSQL and configure the databases
+  hosts: dbserver
+  remote_user: root
+
+  roles:
+    - db
+
+- name: deploy and configure the monitoring service
+  hosts: monitoring
+  remote_user: root
+
+  roles:
+    - monitor
