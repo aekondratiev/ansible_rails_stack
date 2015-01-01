@@ -1,0 +1,11 @@
+---
+# These tasks install the EPEL-release and NginX packages.
+
+- name: Install EPEL repository and NginX
+  yum: name={{ item }} state=present
+  with_items:
+    - epel-release
+    - nginx
+
+- name: make sure nginx is running
+  service: name=nginx state=started enabled=yes

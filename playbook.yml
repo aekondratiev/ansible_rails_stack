@@ -1,0 +1,7 @@
+- name: configure and deploy the webserver and development environment
+  hosts: webserver
+  remote_user: vagrant
+  sudo: yes
+
+  roles:
+    - web

@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
   config.vm.define :web1 do |web1|
     web1.vm.box = "CentOS_6.6_x86_64"
   # web1.ssh.private_key_path = "/Users/pilgrim/Dev/ansible/.ssh/id_rsa"
-  # web1.vm.network "forwarded_port", guest: 80, host: 8080
+    web1.vm.network "forwarded_port", guest: 80, host: 8080
     web1.vm.network "private_network", ip: "192.168.33.10"
   end
 
