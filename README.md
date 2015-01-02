@@ -1,8 +1,14 @@
-<h1>Rails Deployment</h1>
-
+<h1>Rails Development Stack</h1>
+<h4>In the box:</h4>
+<ul>
+<li>CentOS 6.6 x86_64</li>
+<li>PostgreSQL 9.4</li>
+<li>Nginx</li>
+<li>Ruby</li>
+</ul>
 <p>This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
 
-<p>This is the first iteration.  The goal is to set up each node with the correct software.</p>
+<p>This is iteration-1.  The goal is to set up each node with the correct software.  Iteration-2 will configure the environment for a single project.  Iteration-3 will update to use Ansible variables and allow software versions to be set based on a per-project basis.</p>
 
 <p>I'll keep a general "To Do" list in this section and additional topic-specific lists in each section below.</p>
 
