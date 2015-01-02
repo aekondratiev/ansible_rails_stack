@@ -121,7 +121,17 @@ $ sudo service postgresql-9.4 initdb</p>
 
 <p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
+
+<h3>Convert to Ansible</h3>
+Keep getting an error on step 4:
+"msg: cannot change to directory '/home/vagrant/ruby-2.0.0': path does not exist"
+Wont work with "command", "shell", or "raw"
+<h4>To Do:</h4>
+<ul>
+<li>Add sha256sum to tarball download</li>
+</ul>
 <h4>Errors</h4>
+---Fixed:
 <p> Can't install bundler.  Get this error: You don't have write permissions for the /usr/local/lib/ruby/gems/2.2.0 directory.</p>
 <p>I change the permissions on that directory with "chmod 777 /dir" to give rwx access to everyone.  Try to install bundler and get a new error: Fetching: bundler-1.7.10.gem (100%)
 ERROR:  While executing gem ... (Errno::EACCES)
@@ -132,7 +142,7 @@ ERROR:  While executing gem ... (Errno::EACCES)
 
 <p>This works and now I can install the bundler gem.  But what new permissions traps await me?  Only time will tell....</p>
 
----
+---Fixed:
 <p>Build failed.  Get the following: linking shared-object fiddle.so
 /usr/bin/ld: ./libffi-3.2.1/.libs/libffi.a(raw_api.o): relocation R_X86_64_32 against `.text' can not be used when making a shared object; recompile with -fPIC
 ./libffi-3.2.1/.libs/libffi.a: could not read symbols: Bad value
