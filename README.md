@@ -113,9 +113,26 @@ $ sudo service postgresql-9.4 initdb</p>
 <p>5. Check for gem</p>
 <p>$ gem --version # should see 2.4.5</p>
 
-<p>6. Install bundler</p>
+<p>6. Change permissions to allow gem downloads(this assumes that the user is in the wheel group)</p>
+<p>$ sudo chgrp -R wheel /usr/local/lib/ruby/</p>
+<p>$ sudo chmod -R 775 /usr/local/lib/ruby/</p>
+<p>$ sudo chgrp -R wheel /usr/local/bin/</p>
+<p>$ sudo chmod -R 775 /usr/local/bin/</p>
+
+<p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
 <h4>Errors</h4>
+<p> Can't install bundler.  Get this error: You don't have write permissions for the /usr/local/lib/ruby/gems/2.2.0 directory.</p>
+<p>I change the permissions on that directory with "chmod 777 /dir" to give rwx access to everyone.  Try to install bundler and get a new error: Fetching: bundler-1.7.10.gem (100%)
+ERROR:  While executing gem ... (Errno::EACCES)
+    Permission denied @ rb_sysopen - /usr/local/lib/ruby/gems/2.2.0/cache/bundler-1.7.10.gem</p>
+<p>I change back the original permissions to 755 and change the group ownership from root to wheel "sudo chgrp -R wheel /usr/local/lib/ruby/".  Failed, no write permissions.  Now I will change the permissions to 775 with "sudo chmod -R 775 /usr/local/lib/ruby/".  New error: You don't have write permissions for the /usr/local/bin directory.  So, change the group to wheel and change the permissions to 775:</p>
+<p>$ sudo chgrp -R wheel /usr/local/bin/</p>
+<p>$ sudo chmod -R 775 /usr/local/bin/</p>
+
+<p>This works and now I can install the bundler gem.  But what new permissions traps await me?  Only time will tell....</p>
+
+---
 <p>Build failed.  Get the following: linking shared-object fiddle.so
 /usr/bin/ld: ./libffi-3.2.1/.libs/libffi.a(raw_api.o): relocation R_X86_64_32 against `.text' can not be used when making a shared object; recompile with -fPIC
 ./libffi-3.2.1/.libs/libffi.a: could not read symbols: Bad value
