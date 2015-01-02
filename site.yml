@@ -16,7 +16,7 @@
     - web
     - rails
 
-- name: deploy PostgreSQL and configure the databases
+- name: deploy PostgreSQL and configure the databases and users
   hosts: dbserver
   remote_user: root
 
