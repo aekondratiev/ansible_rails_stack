@@ -1,0 +1,8 @@
+---
+# initialize, start, and configure PostgreSQL
+
+- name: Initialize the database cluster
+  command: service postgresql-9.4 initdb
+
+- name: Start PostgreSQL and enable on boot
+  service: name=postgresql-9.4 state=started enabled=yes

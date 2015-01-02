@@ -2,11 +2,14 @@
 
 <p>This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
 
+<p>This is the first iteration.  The goal is to set up each node with the correct software.</p>
+
 <p>I'll keep a general "To Do" list in this section and additional topic-specific lists in each section below.</p>
 
 <h3>To Do:</h3>
 <ul>
 <li>Find easier way to set up ssh keys for public Vagrant boxes</li>
+<li>Update playbooks to use variables in later iteration</li>
 </ul>
 <h2>The Plan</h2>
 Using vagrant with the following VMs (3): web/app server, db server, and monitoring service.  I am going to configure everything manually at first and then show how the same would be done with Ansible.
@@ -50,15 +53,38 @@ $ sudo systemctl start Nginx # for CentOS7
 <li>d. Set user permissions</li>
 </ul>
 </p>
-<h2>Configure PostgreSQL 9.3 Server</h2>
-<p>Plan: We will need to enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.
+<h2>Configure PostgreSQL 9.4 Server</h2>
+<p>Plan: We will need to enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.  We will need to install PG packages on the db and web servers.
 </p>
-<p>1. Enable PG repo</p>
+<p>1. Enable PG repo: 
+$ sudo rpm -ivh http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
 
+Apparently you can install this rpm with yum (which I will use with ansible):
+$ sudo yum install -y http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+</p>
+<p>2. Grab the necessary packages: 
+$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib
+
+This will also install dependencies: I needed libxslt
+</p>
+<p>3. Initialize the database cluster:
+$ sudo service postgresql-9.4 initdb</p>
+
+<h3>Errors</h3>
+<p>Ansible could not initialize the database.  Get "stderr: postgresql-9.4: unrecognized service".  Checked PG docs on Ansible, I need to install python-psycopg2 if using PG.  Did this.  Same error.</p>
+
+<p>It was a YAML syntax error in "main.yml" in my db/tasks folder.  I had multiple "include:" under one "- name:" heading and they were being run out of order.  Can't do this.  Removed "- name:" and changed "include:" to "- include:".  It worked.</p>
+<ul>To Do:
+1. install PG on db server
+2. install PG on webserver client
+<li>3. Where is the PGP key?  Don't need it but install throws a warning without it.  If I could find it, would use "$ rpm -import http://link/to/key".  There is no warning when I use "yum install"</li>
+</ul>
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
 <ul>
 <li>Official Ansible Docs</li>
 <li>#ansible on Freenode</li>
 <li>Ansible Galaxy</li>
+<li>PG RPM Building Project - Yum Repository Howto: http://yum.postgresql.org/howtoyum.php</li>
+<li>Installing PostgreSQL on Red Hat Enterprise Linux / Fedora Core: see PG RPM Building Project</li>
 </ul>

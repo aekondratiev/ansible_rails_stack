@@ -1,7 +1,7 @@
-- name: configure and deploy the webserver and development environment
-  hosts: webserver
+- name: configure and deploy the test server
+  hosts: dbserver
   remote_user: vagrant
   sudo: yes
 
   roles:
-    - web
+    - db

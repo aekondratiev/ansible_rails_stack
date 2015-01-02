@@ -1,5 +1,4 @@
 ---
 # Tasks for PostgreSQL
-
-- name: Install PostgreSQL
-  include: install_postgresql.yml
+- include: install_postgresql.yml
+- include: configure.yml
