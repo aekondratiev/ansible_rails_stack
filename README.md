@@ -38,7 +38,9 @@ $ sudo chkconfig Nginx on # for CentOS6
 $ sudo systemctl start Nginx # for CentOS7
 
 TODO:
-Set up ports, firewall, selinux.
+a. Set up ports, firewall, selinux.
+b. index.html is located at "/usr/share/nginx/html"
+c. config file "/etc/nginx/nginx.conf"
 
 <h2>Configure PostgreSQL</h2>
 We 
