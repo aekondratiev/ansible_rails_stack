@@ -16,6 +16,8 @@
 <ul>
 <li>Find easier way to set up ssh keys for public Vagrant boxes</li>
 <li>Update playbooks to use variables in later iteration</li>
+<li>Add "update_cache=yes" to playbooks.</li>
+<li>Firewall/SElinux settings</li>
 </ul>
 <h2>The Plan</h2>
 Using vagrant with the following VMs (3): web/app server, db server, and monitoring service.  I am going to configure everything manually at first and then show how the same would be done with Ansible.

@@ -1,7 +1,7 @@
 - name: configure and deploy the test server
-  hosts: dbserver
+  hosts: webserver
   remote_user: vagrant
   sudo: yes
 
   roles:
-    - db
+    - rails
