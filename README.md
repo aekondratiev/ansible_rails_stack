@@ -4,7 +4,8 @@
 <li>CentOS 6.6 x86_64</li>
 <li>PostgreSQL 9.4</li>
 <li>Nginx</li>
-<li>Ruby</li>
+<li>Ruby 2.2.0p0</li>
+<li>Gem 2.4.5</li>
 </ul>
 <p>This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
 
@@ -94,8 +95,49 @@ $ sudo service postgresql-9.4 initdb</p>
 </ul>
 
 <h2>Configure Ruby/Rails</h2>
-<p>Plan:  Install Ruby from source</p>
+<p>Plan:  Install Ruby from source; install bundler</p>
 
+<p>1. Install the prereqs:</p>
+<p>$ sudo yum install -y wget git gcc openssl-devel readline-devel zlib-devel libyaml-devel gcc-c++ patch automake libtool bison libffi-devel</p>
+
+<p>2. Get the latest stable Ruby tarball (2.2.0):</p>
+<p>$ wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz</p>
+
+<p>3. Unpack the tarball</p>
+<p>$ tar -xzf ruby-2.2.0.tar.gz</p>
+
+<p>4. Build Ruby</p>
+<p>$ ./ruby-2.2.0/configure; make; sudo make install</p>
+<p>Installs to "usr/local" by default</p>
+
+<p>5. Check for gem</p>
+<p>$ gem --version # should see 2.4.5</p>
+
+<p>6. Install bundler</p>
+<p>$ gem install bundler</p>
+<h4>Errors</h4>
+<p>Build failed.  Get the following: linking shared-object fiddle.so
+/usr/bin/ld: ./libffi-3.2.1/.libs/libffi.a(raw_api.o): relocation R_X86_64_32 against `.text' can not be used when making a shared object; recompile with -fPIC
+./libffi-3.2.1/.libs/libffi.a: could not read symbols: Bad value
+collect2: ld returned 1 exit status.  </p>
+
+<p>  I think my minimal install of CentOS 6.6 is missing required packages.  I wonder if I need to install @Development group.  I install libffi-devel and start again.  Getting a lot of warnings and "failed to install messages".  Eventually I get this output:   
+	Files:        967
+
+  Classes:     1410 ( 581 undocumented)
+  Modules:      280 ( 108 undocumented)
+  Constants:   2159 ( 594 undocumented)
+  Attributes:  1154 ( 253 undocumented)
+  Methods:    10483 (2185 undocumented)
+
+  Total:      15486 (3721 undocumented)
+   75.97% documented
+
+  Elapsed: 77.6s
+</p>
+<p>I now run sudo make install...and check with ruby -v.  Ruby is installed.  But Im not sure what all of those undocumented numbers mean.  </p>
+
+<p>I am going to start over and include the following in the prereqs: gcc-c++ patch automake libtool bison libffi-devel.  No errors but same number of files documented.</p>
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
 <ul>

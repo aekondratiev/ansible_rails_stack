@@ -1,0 +1,23 @@
+---
+- name: Install Ruby - install dependencies
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - wget 
+    - git 
+    - gcc 
+    - openssl-devel 
+    - readline-devel 
+    - zlib-devel 
+    - libyaml-devel 
+    - gcc-c++ 
+    - patch 
+    - automake 
+    - libtool 
+    - bison 
+    - libffi-devel
+
+- name: Download Ruby source
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz sha256sum= 7671e394abfb5d262fbcd3b27a71bf78737c7e9347fa21c39e58b0bb9c4840fc
+
+- name: Unpack Ruby tarball
+  unarchive: src=/home/vagrant/ruby-2.2.0.tar.gz dest=/home/vagrant/ copy=no
