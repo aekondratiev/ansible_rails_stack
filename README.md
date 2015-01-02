@@ -1,7 +1,13 @@
 <h1>Rails Deployment</h1>
 
-This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.
+<p>This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
 
+<p>I'll keep a general "To Do" list in this section and additional topic-specific lists in each section below.</p>
+
+<h3>To Do:</h3>
+<ul>
+<li>Find easier way to set up ssh keys for public Vagrant boxes</li>
+</ul>
 <h2>The Plan</h2>
 Using vagrant with the following VMs (3): web/app server, db server, and monitoring service.  I am going to configure everything manually at first and then show how the same would be done with Ansible.
 
@@ -36,15 +42,18 @@ $ sudo yum install Nginx -y
 $ sudo chkconfig Nginx on # for CentOS6
 $ sudo systemctl start Nginx # for CentOS7
 </p>
-<p>TODO:
-a. Set up ports, firewall, selinux.
-b. index.html is located at "/usr/share/nginx/html"
-c. config file "/etc/nginx/nginx.conf"
-d. Set user permissions
+<h3>TO DO:</h3>
+<p><ul>
+<li>a. Set up ports, firewall, selinux.</li>
+<li>b. index.html is located at "/usr/share/nginx/html"</li>
+<li>c. config file "/etc/nginx/nginx.conf"</li>
+<li>d. Set user permissions</li>
+</ul>
 </p>
-<h2>Configure PostgreSQL Server</h2>
-<p>Plan: We
+<h2>Configure PostgreSQL 9.3 Server</h2>
+<p>Plan: We will need to enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.
 </p>
+<p>1. Enable PG repo</p>
 
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
