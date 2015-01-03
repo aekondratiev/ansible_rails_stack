@@ -69,8 +69,6 @@ $ sudo systemctl start Nginx # for CentOS7
 <h4>TO DO:</h4>
 <p><ul>
 <li>a. Set up ports, firewall, selinux.</li>
-<li>b. index.html is located at "/usr/share/nginx/html"</li>
-<li>c. config file "/etc/nginx/nginx.conf"</li>
 <li>d. Set user permissions</li>
 </ul>
 </p>
@@ -106,8 +104,6 @@ $ sudo service postgresql-9.4 initdb</p>
 <li>Where is the PGP key?  Don't need it but install throws a warning without it.  If I could find it, would use "$ rpm -import http://link/to/key".  There is no warning when I use "yum install"</li>
 </ol>
 
-<h4>Errors:</h4>
-
 <h2>Configure Ruby/Rails</h2>
 <h3>Part 1: Ruby</h3>
 <p>Plan:  Install Ruby from source; install bundler; set up symlinks and shared ruby library.</p>
@@ -137,7 +133,7 @@ $ sudo service postgresql-9.4 initdb</p>
 <p>$ sudo chgrp -R wheel /usr/local/bin/</p>
 <p>$ sudo chmod -R 775 /usr/local/bin/</p>
 
-<p>An alternative method is to create symlinks.</p>
+<p>An alternative method is to create symlinks.  See "rails" role.</p>
 
 <p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
