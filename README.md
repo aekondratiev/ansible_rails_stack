@@ -9,7 +9,7 @@
 </ul>
 <p>This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
 
-<p>This is iteration-1.  The goal is to set up each node with the correct software.  Iteration-2 will configure the environment for a single project.  Iteration-3 will update to use Ansible variables and allow software versions to be set based on a per-project basis.</p>
+<p>This is iteration-1.  The goal is to set up each node with the correct software.  Iteration-2 will configure the environment for a single project.  Iteration-3 will create variables and remove hard coding.</p>
 
 <p>I'll keep a general "To Do" list in this section and additional topic-specific lists in each section below.</p>
 
@@ -19,6 +19,7 @@
 <li>Update playbooks to use variables in later iteration</li>
 <li>Add "update_cache=yes" to playbooks.</li>
 <li>Firewall/SElinux settings</li>
+<li>Add cleanup</li>
 </ul>
 <h2>The Plan</h2>
 Using vagrant with the following VMs (3): web/app server, db server, and monitoring service.  I am going to configure everything manually at first and then show how the same would be done with Ansible.
@@ -107,28 +108,29 @@ $ sudo service postgresql-9.4 initdb</p>
 <p>$ tar -xzf ruby-2.2.0.tar.gz</p>
 
 <p>4. Build Ruby</p>
-<p>$ ./ruby-2.2.0/configure; make; sudo make install</p>
+<p>$ ./ruby-2.2.0/configure --enable-shared; make; sudo make install</p>
 <p>Installs to "usr/local" by default</p>
 
 <p>5. Check for gem</p>
 <p>$ gem --version # should see 2.4.5</p>
 
+<p>5a. Config gem docs</p>
+<p>$ echo 'gem: --no-rdoc --no-ri' > ~/.gemrc</p>
 <p>6. Change permissions to allow gem downloads(this assumes that the user is in the wheel group)</p>
 <p>$ sudo chgrp -R wheel /usr/local/lib/ruby/</p>
 <p>$ sudo chmod -R 775 /usr/local/lib/ruby/</p>
 <p>$ sudo chgrp -R wheel /usr/local/bin/</p>
 <p>$ sudo chmod -R 775 /usr/local/bin/</p>
 
+<p>An alternative method is to create symlinks.</p>
 <p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
 
-<h3>Convert to Ansible</h3>
-Keep getting an error on step 4:
-"msg: cannot change to directory '/home/vagrant/ruby-2.0.0': path does not exist"
-Wont work with "command", "shell", or "raw"
 <h4>To Do:</h4>
 <ul>
 <li>Add sha256sum to tarball download</li>
+<li>If I ./configure with "--enable-shared" can I avoid step 6?  No.</li>
+<li>Should I have a "testrb" dir located in /usr/local/bin/?</li>
 </ul>
 <h4>Errors</h4>
 ---Fixed:
@@ -142,35 +144,12 @@ ERROR:  While executing gem ... (Errno::EACCES)
 
 <p>This works and now I can install the bundler gem.  But what new permissions traps await me?  Only time will tell....</p>
 
----Fixed:
-<p>Build failed.  Get the following: linking shared-object fiddle.so
-/usr/bin/ld: ./libffi-3.2.1/.libs/libffi.a(raw_api.o): relocation R_X86_64_32 against `.text' can not be used when making a shared object; recompile with -fPIC
-./libffi-3.2.1/.libs/libffi.a: could not read symbols: Bad value
-collect2: ld returned 1 exit status.  </p>
-
-<p>  I think my minimal install of CentOS 6.6 is missing required packages.  I wonder if I need to install @Development group.  I install libffi-devel and start again.  Getting a lot of warnings and "failed to install messages".  Eventually I get this output:   
-	Files:        967
-
-  Classes:     1410 ( 581 undocumented)
-  Modules:      280 ( 108 undocumented)
-  Constants:   2159 ( 594 undocumented)
-  Attributes:  1154 ( 253 undocumented)
-  Methods:    10483 (2185 undocumented)
-
-  Total:      15486 (3721 undocumented)
-   75.97% documented
-
-  Elapsed: 77.6s
-</p>
-<p>I now run sudo make install...and check with ruby -v.  Ruby is installed.  But Im not sure what all of those undocumented numbers mean.  </p>
-
-<p>I am going to start over and include the following in the prereqs: gcc-c++ patch automake libtool bison libffi-devel.  No errors but same number of files documented.</p>
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
 <ul>
 <li>Official Ansible Docs</li>
 <li>#ansible on Freenode</li>
-<li>Ansible Galaxy</li>
+<li>Jeff Geerling, Ansible Galaxy: https://galaxy.ansible.com/list#/roles/470</li>
 <li>PG RPM Building Project - Yum Repository Howto: http://yum.postgresql.org/howtoyum.php</li>
 <li>Installing PostgreSQL on Red Hat Enterprise Linux / Fedora Core: see PG RPM Building Project</li>
 </ul>

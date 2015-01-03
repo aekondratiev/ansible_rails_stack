@@ -23,14 +23,35 @@
   unarchive: src=/tmp/ruby-2.2.0.tar.gz dest=/home/vagrant/ copy=no
 
 - name: Configure Ruby
-  raw: /home/vagrant/ruby-2.0.0/configure
+  command: ./configure --enable-shared
+  args:
+    chdir: /home/vagrant/ruby-2.2.0
 
 - name: Make Ruby
   command: make
   args:
-    chdir: /home/vagrant/ruby-2.0.0
+    chdir: /home/vagrant/ruby-2.2.0
 
 - name: Install Ruby
   command: make install
   args:
-    chdir: /home/vagrant/ruby-2.0.0
+    chdir: /home/vagrant/ruby-2.2.0
+
+- name: Add ruby symlinks.
+  file: >
+    src=/usr/local/bin/{{ item }}
+    dest=/usr/bin/{{ item }}
+    state=link
+  with_items:
+    - erb
+    - gem
+    - irb
+    - rake
+    - rdoc
+    - ruby
+
+- name: Install the Bundler gem
+  gem: name=bundler state=present user_install=no
+
+- name: Add bundle symlink
+  file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
