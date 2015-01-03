@@ -6,8 +6,10 @@
 <li>Nginx</li>
 <li>Ruby 2.2.0p0</li>
 <li>Gem 2.4.5</li>
+<li>Rails 4.2</li>
 </ul>
-<p>This is an in-progress Rails development environment I'm building while I learn Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
+
+<p>This is an in-progress Rails development environment I'm building with Vagrant/Ansible.  Below are all my notes from setting up this project.  A bit of a mess now but the plan is to clean it up once finished.</p>
 
 <p>This is iteration-1.  The goal is to set up each node with the correct software.  Iteration-2 will configure the environment for a single project.  Iteration-3 will create variables and remove hard coding.</p>
 
@@ -21,6 +23,8 @@
 <li>Firewall/SElinux settings</li>
 <li>Add cleanup</li>
 </ul>
+
+<p>Current time to provision: ~25 minutes.</p>
 <h2>The Plan</h2>
 Using vagrant with the following VMs (3): web/app server, db server, and monitoring service.  I am going to configure everything manually at first and then show how the same would be done with Ansible.
 
@@ -115,6 +119,7 @@ $ sudo service postgresql-9.4 initdb</p>
 
 <p>5a. Config gem docs</p>
 <p>$ echo 'gem: --no-rdoc --no-ri' > ~/.gemrc</p>
+
 <p>6. Change permissions to allow gem downloads(this assumes that the user is in the wheel group)</p>
 <p>$ sudo chgrp -R wheel /usr/local/lib/ruby/</p>
 <p>$ sudo chmod -R 775 /usr/local/lib/ruby/</p>
@@ -122,16 +127,19 @@ $ sudo service postgresql-9.4 initdb</p>
 <p>$ sudo chmod -R 775 /usr/local/bin/</p>
 
 <p>An alternative method is to create symlinks.</p>
+
 <p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
 
 <h3>Part 2: Rails</h3>
 <p>Plan: Install Rails 4</p>
+
 <h4>To Do:</h4>
 <ul>
 <li>Add sha256sum to tarball download</li>
 <li>Install PG client</li>
 <li>Should I have a "testrb" dir located in /usr/local/bin/?</li>
+<li>Disable documentation downloads</li>
 </ul>
 <h4>Errors</h4>
 ---Fixed:
