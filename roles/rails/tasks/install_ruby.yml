@@ -1,6 +1,6 @@
 ---
 - name: Install Ruby - install dependencies
-  yum: name={{ item }} state=present 
+  yum: name={{ item }} state=present
   with_items:
     - wget 
     - git 

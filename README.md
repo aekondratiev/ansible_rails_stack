@@ -92,8 +92,10 @@ $ sudo service postgresql-9.4 initdb</p>
 </ul>
 
 <h4>Errors:</h4>
+
 <h2>Configure Ruby/Rails</h2>
-<p>Plan:  Install Ruby from source; install bundler</p>
+<h3>Part 1: Ruby</h3>
+<p>Plan:  Install Ruby from source; install bundler; set up symlinks and shared ruby library.</p>
 
 <p>1. Install the prereqs:</p>
 <p>$ sudo yum install -y wget git gcc openssl-devel readline-devel zlib-devel libyaml-devel gcc-c++ patch automake libtool bison libffi-devel</p>
@@ -123,6 +125,8 @@ $ sudo service postgresql-9.4 initdb</p>
 <p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
 
+<h3>Part 2: Rails</h3>
+<p>Plan: Install Rails 4</p>
 <h4>To Do:</h4>
 <ul>
 <li>Add sha256sum to tarball download</li>
