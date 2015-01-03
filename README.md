@@ -84,10 +84,6 @@ This installed dependencies: I needed libxslt
 <p>
 $ sudo service postgresql-9.4 initdb</p>
 
-<h3>Errors:</h3>
-<p>Ansible could not initialize the database.  Get "stderr: postgresql-9.4: unrecognized service".  Checked PG docs on Ansible, I need to install python-psycopg2 if using PG.  Did this.  Same error.</p>
-
-<p>It was a YAML syntax error in "main.yml" in my db/tasks folder.  I had multiple "include:" under one "- name:" heading and they were being run out of order.  Can't do this.  Removed "- name:" and changed "include:" to "- include:".  It worked.</p>
 <h4>To Do:</h4>
 <ul>
 <li>1. install PG on db server</li>
@@ -95,6 +91,7 @@ $ sudo service postgresql-9.4 initdb</p>
 <li>3. Where is the PGP key?  Don't need it but install throws a warning without it.  If I could find it, would use "$ rpm -import http://link/to/key".  There is no warning when I use "yum install"</li>
 </ul>
 
+<h4>Errors:</h4>
 <h2>Configure Ruby/Rails</h2>
 <p>Plan:  Install Ruby from source; install bundler</p>
 
@@ -129,7 +126,7 @@ $ sudo service postgresql-9.4 initdb</p>
 <h4>To Do:</h4>
 <ul>
 <li>Add sha256sum to tarball download</li>
-<li>If I ./configure with "--enable-shared" can I avoid step 6?  No.</li>
+<li>Install PG client</li>
 <li>Should I have a "testrb" dir located in /usr/local/bin/?</li>
 </ul>
 <h4>Errors</h4>
