@@ -23,7 +23,7 @@
   unarchive: src=/tmp/ruby-2.2.0.tar.gz dest=/home/vagrant/ copy=no
 
 - name: Configure Ruby
-  command: ./configure --enable-shared
+  command: ./configure --enable-shared --disable-install-doc
   args:
     chdir: /home/vagrant/ruby-2.2.0
 
@@ -49,6 +49,9 @@
     - rake
     - rdoc
     - ruby
+
+- name: Dont install documentation with gems
+  copy: src=/Users/pilgrim/Dev/ansible/roles/rails/templates/gem_config.conf dest=/home/vagrant/.gemrc
 
 - name: Install the Bundler gem
   gem: name=bundler state=present user_install=no

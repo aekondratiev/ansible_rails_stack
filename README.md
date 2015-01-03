@@ -39,10 +39,17 @@ Using vagrant with the following VMs (3): web/app server, db server, and monitor
 
 <h3>Create your playbooks</h3>
 <p>Plan:  We are going to create playbooks for a Rails/Nginx server, a PostgreSQL server, and a monitoring server (to be named later).  I'll be using the "playbook.yml" file in the root directory to test out my roles as I go along.</p>
+
 <p>1.  Create the file skeleton for your playbooks, roles, tasks, etc.  A "site.yml" file needs to be in the main directory that will reference hosts and roles to apply.</p>
 <p>1b.  Create the following roles: common, web, db, monitor.</p>
 <p>2.  Create a "roles" folder and then, inside, create folders for each of the roles you reference in site.yml.</p>
 <p>3. Create a "main.yml" file inside each role folder.  We will use "includes" inside main.yml but we will create the additional files/folders in later sections.</p>
+
+<h2>Configure Packages Common to All Nodes</h2>
+<p>Plan: Install the packages that every node will use.</p>
+
+<p>1.  Install libselinux-python to enable Ansible's file/copy/template related functions.</p>
+<p>$ sudo yum install -y libselinux-python</p>
 
 <h2>Configure Nginx</h2>
 <p>Plan: We will need to enable the EPEL repo; download Nginx; create a config file; set firewall settings; and start the Nginx service.</p>
@@ -67,9 +74,11 @@ $ sudo systemctl start Nginx # for CentOS7
 <li>d. Set user permissions</li>
 </ul>
 </p>
-<h2>Configure PostgreSQL 9.4 Server</h2>
-<p>Plan: We will need to enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.  We will need to install PG packages on the db and web servers.
+
+<h2>Configure PostgreSQL 9.4 Server and Client Roles</h2>
+<p>Plan: We will need to install ansible dependencies so we can talk to PG nodes; enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.  We will need to install PG packages on the db and client servers.
 </p>
+<h4>Part 1: Install PG Server</h4>
 <p>1. Install pre-reqs:</p>
 <p>
 $ sudo yum install -y python-psycopg2 #Ansible needs this to talk to PG
@@ -88,12 +97,14 @@ This installed dependencies: I needed libxslt
 <p>
 $ sudo service postgresql-9.4 initdb</p>
 
+<h4>Part 2: Install PG on Client</h4>
+<p>5. Create client role by repeating steps 1-3 with the following packages in step 3:</p>
+<p>$ sudo yum install -y postgresql94-libs postgresql94</p>
+
 <h4>To Do:</h4>
-<ul>
-<li>1. install PG on db server</li>
-<li>2. install PG on webserver client</li>
-<li>3. Where is the PGP key?  Don't need it but install throws a warning without it.  If I could find it, would use "$ rpm -import http://link/to/key".  There is no warning when I use "yum install"</li>
-</ul>
+<ol>
+<li>Where is the PGP key?  Don't need it but install throws a warning without it.  If I could find it, would use "$ rpm -import http://link/to/key".  There is no warning when I use "yum install"</li>
+</ol>
 
 <h4>Errors:</h4>
 
@@ -139,7 +150,6 @@ $ sudo service postgresql-9.4 initdb</p>
 <li>Add sha256sum to tarball download</li>
 <li>Install PG client</li>
 <li>Should I have a "testrb" dir located in /usr/local/bin/?</li>
-<li>Disable documentation downloads</li>
 </ul>
 <h4>Errors</h4>
 ---Fixed:

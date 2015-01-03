@@ -1,0 +1,5 @@
+---
+# install packages common to all machines
+
+- name: Install SELinux python package needed by ansible
+  yum: name=libselinux-python state=present

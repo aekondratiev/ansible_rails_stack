@@ -5,13 +5,14 @@
   sudo: yes
 
   roles:
-    - web
+    - common
+#    - web
     - rails
 
-- name: configure db
-  hosts: dbserver
-  remote_user: vagrant
-  sudo: yes
-
-  roles:
-    - db
+#- name: configure db
+#  hosts: dbserver
+#  remote_user: vagrant
+#  sudo: yes
+#
+#  roles:
+#    - db
