@@ -6,6 +6,14 @@
   with_items:
     - nginx
 
+- name: set nginx http firewall settings
+  command: firewall-cmd --permanent --zone=public --add-service=http
+
+- name: set nginx https firewall settings
+  command: firewall-cmd --permanent --zone=public --add-service=https
+
+- name: reload firewall
+  command: firewall-cmd --reload
 
 - name: make sure nginx is running
   service: name=nginx state=started enabled=yes
