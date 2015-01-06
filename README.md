@@ -159,6 +159,9 @@ ERROR:  While executing gem ... (Errno::EACCES)
 
 <p>This works and now I can install the bundler gem.  But what new permissions traps await me?  Only time will tell....</p>
 
+<h2>Set Up Logstash Server</h2>
+<p>Plan: Create an ELK (Elasticsearch, Logstash, Kibana) stack; set up Logstash forwarder on clients.</p>
+
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
 <ul>
