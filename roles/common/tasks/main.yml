@@ -2,4 +2,8 @@
 # install packages common to all machines
 
 - name: Install SELinux python package needed by ansible
-  yum: name=libselinux-python state=present
+  yum: name={{ item }} state=present
+  with_items:
+    - epel-release
+    - libselinux-python
+    - python-passlib

@@ -1,0 +1,32 @@
+---
+- name: Create a yum repository for Logstash
+  template: src=logstash.repo.j2 dest=/etc/yum.repos.d/logstash.repo mode=0644 #user=root group=root
+
+- name: Install Logstash
+  yum: name=logstash-1.4.2 state=present
+
+- name: Start Logstash and enable on boot
+  service: name=logstash state=started enabled=yes
+  
+- name: Generate SSL Certificate and key pair
+  command: openssl req -x509 -batch -nodes -days 3650 -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+  args:
+    chdir: /etc/pki/tls/
+
+- name: Create Logstash Input Configuration file
+  template: src=01-lumberjack-input.conf.j2 dest=/etc/logstash/conf.d/01-lumberjack-input.conf mode=0644 #user=root group=root
+
+- name: Create a configuration file to filter syslog messages
+  template: src=10-syslog.conf.j2 dest=/etc/logstash/conf.d/10-syslog.conf mode=0644 #user=root group=root
+  
+- name: Create a configuration file to filter output
+  template: src=30-lumberjack-output.conf.j2 dest=/etc/logstash/conf.d/30-lumberjack-output.conf mode=0644 #user=root group=root
+  notify:
+    - restart logstash
+
+- name: Start Logstash and enable on boot
+  service: name=logstash state=started enabled=yes
+
+# Currently copies to localhost with cp not scp
+- name: Copy the SSL Certificate to remote nodes
+  command: cp /etc/pki/tls/certs/logstash-forwarder.crt /tmp

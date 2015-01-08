@@ -1,0 +1,36 @@
+---
+- name: Install Ansible's python module dependencies 
+  yum: name={{ item }} state=present
+  with_items:
+    - libsemanage-python
+    - MySQL-python
+
+- name: Install - get the server packages
+  yum: name={{ item }} state=present
+  with_items:
+    - mariadb-server
+    - mariadb
+
+- name: make sure mariadb is running
+  service: name=mariadb state=started enabled=yes
+
+# the below tasks are the equivalent of running the mysql security script (but not removing remote root login)
+- name: update mysql root password for all root accounts
+  mysql_user: name=root host={{ item }} password=vagrant priv=*.*:ALL,GRANT state=present
+  with_items:
+    - vagrant
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: Create root user via my.cnf
+  template: "src=my.cnf.j2 dest=~/.my.cnf"
+
+- name: Remove anonymous users
+  action: mysql_user user="" host={{ item }} state=absent
+  with_items:
+    - vagrant
+    - localhost
+
+- name: Remove the test database
+  action: mysql_db db=test state=absent

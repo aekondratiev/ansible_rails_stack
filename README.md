@@ -26,11 +26,11 @@
 
 <p>Current time to provision: ~25 minutes.</p>
 <h2>The Plan</h2>
-Using vagrant with the following VMs (3): web/app server, db server, and monitoring service.  I am going to configure everything manually at first and then show how the same would be done with Ansible.
+VMs (3): web/app server, db server, and monitoring service.
 
 <h3>Initial Setup:</h3>
 <ul>
-	<li>1.  Create Vagrantfile with 3 machines configured on the same private network.</li>
+	<li>1.  Vagrantfile with 3 machines configured on the same private network.</li>
 	<li>2.  Configure Ansible to use the insecure Vagrant ssh keys.  To keep things simple, I created a local .ssh folder and copied the Vagrant insecure keys that ship with public boxes.  I needed to add "config.ssh.insert_key = false" to my Vagrantfile in order to prevent new keys being used on spin up.  </li>
 	<li>3.  Create an inventory file called "hosts".  Place each machine in the appropriate group and assign the vagrant user. </li>
 	<li>4. Create an "ansible.cfg" file and add the ssh private key path.  (You can grab the most recent config file here: https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg)</li>
@@ -147,17 +147,13 @@ $ sudo service postgresql-9.4 initdb</p>
 <li>Install PG client</li>
 <li>Should I have a "testrb" dir located in /usr/local/bin/?</li>
 </ul>
-<h4>Errors</h4>
+<h4>Issues</h4>
 ---Fixed:
 <p> Can't install bundler.  Get this error: You don't have write permissions for the /usr/local/lib/ruby/gems/2.2.0 directory.</p>
-<p>I change the permissions on that directory with "chmod 777 /dir" to give rwx access to everyone.  Try to install bundler and get a new error: Fetching: bundler-1.7.10.gem (100%)
-ERROR:  While executing gem ... (Errno::EACCES)
-    Permission denied @ rb_sysopen - /usr/local/lib/ruby/gems/2.2.0/cache/bundler-1.7.10.gem</p>
-<p>I change back the original permissions to 755 and change the group ownership from root to wheel "sudo chgrp -R wheel /usr/local/lib/ruby/".  Failed, no write permissions.  Now I will change the permissions to 775 with "sudo chmod -R 775 /usr/local/lib/ruby/".  New error: You don't have write permissions for the /usr/local/bin directory.  So, change the group to wheel and change the permissions to 775:</p>
+
 <p>$ sudo chgrp -R wheel /usr/local/bin/</p>
 <p>$ sudo chmod -R 775 /usr/local/bin/</p>
 
-<p>This works and now I can install the bundler gem.  But what new permissions traps await me?  Only time will tell....</p>
 
 <h2>Set Up Logstash Server</h2>
 <p>Plan: Create an ELK (Elasticsearch, Logstash, Kibana) stack; set up Logstash forwarder on clients.</p>

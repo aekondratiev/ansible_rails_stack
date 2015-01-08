@@ -1,0 +1,27 @@
+---
+- name: Install php packages
+  yum: name={{ item }} state=present
+  with_items:
+    - php
+    - php-mysql
+    - php-fpm
+
+- name: Configure php to use SCRIPT_FILENAME and not PATH_TRANSLATED
+  lineinfile: dest=/etc/php.ini regexp=";cgi.fix_pathinfo=1" line="cgi.fix_pathinfo=0"
+
+- name: Configure the FastCGI listen parameter
+  lineinfile: dest=/etc/php-fpm.d/www.conf regexp="listen = 127.0.0.1:9000" line="listen = /var/run/php-fpm/php-fpm.sock"
+
+- name: Configure the FastCGI user parameter
+  lineinfile: dest=/etc/php-fpm.d/www.conf regexp="user = apache" line="user = nginx"  
+
+- name: Configure the FastCGI group parameter
+  lineinfile: dest=/etc/php-fpm.d/www.conf regexp="group = apache" line="group = nginx"
+
+- name: Start the PHP processor and enable on boot
+  service: name=php-fpm state=started enabled=yes
+
+- name: Configure the nginx server block to use the PHP processor
+  template: src=default.conf.j2 dest=/etc/nginx/conf.d/default.conf
+  notify:
+    - restart nginx

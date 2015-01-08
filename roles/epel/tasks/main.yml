@@ -1,0 +1,3 @@
+---
+ - include: install_epel.yml
+   yum: name=epel state=latest
