@@ -1,0 +1,2 @@
+---
+- include: latest_ntp.yml
