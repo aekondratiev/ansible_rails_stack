@@ -1,0 +1,16 @@
+---
+- name: Install prereqs needed by Ansible
+  yum: name=libselinux-python state=present
+
+- name: Configure client to connent to local YUM repository
+  template: src=CentOS-Base.repo.j2 dest=/etc/yum.repos.d/CentOS-Base.repo #owner=root group=root mode=0644
+
+- name: Turn off fastestmirror plugin
+  template: src=fastestmirror.conf.j2 dest=/etc/yum/pluginconf.d/fastestmirror.conf #owner=root group=root mode=0644
+
+- name: Disable SELinux
+  lineinfile: dest=/etc/sysconfig/selinux regexp='SELINUX=permissive' line='SELINUX=disabled'
+
+- name: Clean cache
+  sudo: yes
+  command: yum clean all
