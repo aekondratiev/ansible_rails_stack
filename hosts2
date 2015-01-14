@@ -1,8 +1,0 @@
-[webserver]
-192.168.33.10 ansible_ssh_user=vagrant
-
-[dbserver]
-192.168.33.12 ansible_ssh_user=vagrant
-
-[monitoring]
-192.168.33.14 ansible_ssh_user=vagrant

@@ -1,11 +1,10 @@
 ---
-- name: configure and deploy the test server
-  hosts: all
-  remote_user: vagrant
+- hosts: all
   sudo: yes
 
   roles:
+    - client_local_repo
 #    - common
-    - web
+#    - web
 #    - rails
 #    - ntp
