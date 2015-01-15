@@ -26,8 +26,9 @@ Vagrant.configure(2) do |config|
     machine.vm.network "private_network", ip: "192.168.33.137"
 
     machine.vm.provision :ansible do |ansible|
-      ansible.playbook = "playbook.yml"
+      ansible.playbook = "site.yml"
       ansible.limit = 'all'
+      ansible.verbose = 'vvvv'
 			ansible.groups = {
         "group1" => ["monitor"],
         "group2" => ["db"],

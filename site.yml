@@ -7,25 +7,36 @@
 
   roles:
     - common
+    - client_local_repo
+    - ntp
 
-- name: configure and deploy the webserver and development environment
-  hosts: webserver
+- name: configure and deploy the web server and app server
+  hosts: web1
   remote_user: root
 
   roles:
-    - web
-    - rails
+    - nginx
+    - ruby_source
+    - pg_client
+    - logstash-forwarder 
+
 
 - name: deploy PostgreSQL and configure the databases and users
-  hosts: dbserver
+  hosts: db
   remote_user: root
 
   roles:
-    - db
+    - pg
+    - logstash-forwarder 
 
 - name: deploy and configure the monitoring service
-  hosts: monitoring
+  hosts: monitor
   remote_user: root
 
   roles:
-    - monitor
+    - go
+    - java
+    - elastic
+    - kibana
+    - nginx
+    - logstash

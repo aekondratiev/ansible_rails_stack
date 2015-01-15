@@ -1,2 +1,2 @@
 ---
-include: install_pg_client.yml
+- include: install_pg_client.yml
