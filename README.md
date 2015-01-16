@@ -12,37 +12,29 @@
 <li>Kibana 3.0.1</li>
 </ul>
 
-<p>This is an in-progress Rails development environment I'm building with Vagrant/Ansible.  Below are my notes from setting up this project.</p>
+<p>This is an in-progress Rails development environment I'm building with Vagrant/Ansible.  Below are my notes from setting up this project and the manual instructions if you were building this at the command line.  I used CentOS 6.6 as my base but the ansible roles work with CentOS 7 too.</p>
 
-<p>Iteration-1</p>
+<p>Iteration-1: Create roles to congifure each VM--Finished</p>
+<p>Iteration-2: Add individual users; configure web/app and db servers --In progress</p>
 
 <p>I'll keep a top level "To Do" list in this section and additional topic-specific lists in each section below.</p>
 
 <h4>To Do:</h4>
 <ul>
-<li>Update playbooks to use variables in later iteration</li>
-<li>Add "update_cache=yes" to playbooks.</li>
-<li>Add cleanup</li>
 </ul>
 
-<p>Current time to provision: ~25 minutes.</p>
 <h2>The Plan</h2>
 VMs (3): web/app server, db server, and monitoring service.
 
 <h3>Initial Setup:</h3>
 <ul>
-	<li>1.  Vagrantfile with 3 machines configured on the same private network.</li>
-	<li>2.  Configure Ansible within the Vagrantfile</li>
+	<li>1.  Vagrantfile with 3 machines configured on the same private network.  Grab the base box from Atlas if using Vagrant: mjp182/CentOS_6.6</li>
+	<li>2.  Provisioned with Ansible 1.8.2</li>
 	<li>3. Create an "ansible.cfg" file.  (You can grab the most recent config file here: https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg)</li>
 </ul>
 
 <h3>Create your playbooks</h3>
-<p>Plan:  We are going to create playbooks for a Rails/Nginx server, a PostgreSQL server, and an ELK monitoring server.  I'll be using the "playbook.yml" file in the root directory to test out my roles as I go along.</p>
-
-<p>1.  Create the file skeleton for your playbooks, roles, tasks, etc.  A "site.yml" file needs to be in the main directory that will reference hosts and roles to apply.</p>
-<p>1b.  Create the following roles: common, web, db, monitor.</p>
-<p>2.  Create a "roles" folder and then, inside, create folders for each of the roles you reference in site.yml.</p>
-<p>3. Create a "main.yml" file inside each role folder.  We will use "includes" inside main.yml but we will create the additional files/folders in later sections.</p>
+<p>Plan:  We are going to create playbooks for a Rails/Nginx server, a PostgreSQL server, and an ELK monitoring server.</p>
 
 <h2>Configure Packages Common to All Nodes</h2>
 <p>Plan: Install the packages that every node will use.</p>
@@ -52,46 +44,42 @@ VMs (3): web/app server, db server, and monitoring service.
 
 <h2>Configure Nginx</h2>
 <p>Plan: We will need to enable the EPEL repo; download Nginx; create a config file; set firewall settings (if necessary); and start the Nginx service.</p>
+<ol>
+<li>Enable EPEL repository.</li>
+<p>Download the EPEL repo for CentOS 6 or 7 with the following command:</p>
+<p>$ sudo yum install epel-release -y</p>
+<li>Install Nginx package:</li>
+<p>$ sudo yum install Nginx -y</p>
+<li>Start the Nginx service</li>
+<p>$ sudo chkconfig Nginx on # for CentOS6</p>
+<p>$ sudo systemctl start Nginx # for CentOS7</p>
+</p>
+</ol>
 
-<p>1.  Enable EPEL repository.  https://fedoraproject.org/wiki/EPEL.  
-Download the EPEL repo for CentOS 6 or 7 with the following command:
-
-$ sudo yum install epel-release -y
-</p>
-<p>2.  Install Nginx package:
-$ sudo yum install Nginx -y
-</p>
-<p>3.  Start the Nginx service
-$ sudo chkconfig Nginx on # for CentOS6
-$ sudo systemctl start Nginx # for CentOS7
-</p>
 <h4>TO DO:</h4>
 <p><ul>
 </ul>
 </p>
 
 <h2>Configure PostgreSQL 9.4 Server and Client Roles</h2>
-<p>Plan: We will need to install ansible dependencies so we can talk to PG nodes; enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.  We will need to install PG packages on the db and client servers.
+<p>Plan: We will need to install ansible dependencies so we can talk to PG nodes; enable the PostgreSQL ("PG") repo; download the correct packages; configure the database.  We will also need to install PG packages on the db and client servers.
 </p>
 <h4>Part 1: Install PG Server</h4>
-<p>1. Install pre-reqs:</p>
-<p>
-$ sudo yum install -y python-psycopg2 #Ansible needs this to talk to PG
+<ol>
+<li>Install pre-reqs:</li>
+<p>$ sudo yum install -y python-psycopg2 #Ansible needs this to talk to PG
 </p>
-<p>2. Enable PG repo:</p> 
-<p>
-$ sudo yum install -y http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+<li>Enable PG repo:</li>
+<p>$ sudo yum install -y http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
 </p>
-<p>3. Grab the necessary packages:</p>
-<p>
-$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib</p>
+<li>Grab the necessary packages:</li>
+<p>$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib</p>
 
-<p>4. Initialize the database cluster:</p>
-<p>
-$ sudo service postgresql-9.4 initdb</p>
+<li>Initialize the database cluster:</li>
+<p>$ sudo service postgresql-9.4 initdb</p>
 
 <h4>Part 2: Install PG on Client</h4>
-<p>5. Create client role by repeating steps 1-3 with the following packages in step 3:</p>
+<li>Create client role by repeating steps 1-3 with the following packages in step 3:</li>
 <p>$ sudo yum install -y postgresql94-libs postgresql94</p>
 
 <h4>To Do:</h4>
@@ -102,26 +90,26 @@ $ sudo service postgresql-9.4 initdb</p>
 <h3>Part 1: Ruby</h3>
 <p>Plan:  Install Ruby from source; install bundler; set up symlinks and shared ruby library.</p>
 
-<p>1. Install the prereqs:</p>
+<li>Install the prereqs:</li>
 <p>$ sudo yum install -y wget git gcc openssl-devel readline-devel zlib-devel libyaml-devel gcc-c++ patch automake libtool bison libffi-devel</p>
 
-<p>2. Get the latest stable Ruby tarball (2.2.0):</p>
+<li>Get the latest stable Ruby tarball (2.2.0):</li>
 <p>$ wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz</p>
 
-<p>3. Unpack the tarball</p>
+<li>Unpack the tarball</li>
 <p>$ tar -xzf ruby-2.2.0.tar.gz</p>
 
-<p>4. Build Ruby</p>
+<li>Build Ruby</li>
 <p>$ ./ruby-2.2.0/configure --enable-shared; make; sudo make install</p>
 <p>Installs to "usr/local" by default</p>
 
-<p>5. Check for gem</p>
+<li>Check for gem</li>
 <p>$ gem --version # should see 2.4.5</p>
 
-<p>5a. Config gem docs</p>
+<p>Config gem docs:</p>
 <p>$ echo 'gem: --no-rdoc --no-ri' > ~/.gemrc</p>
 
-<p>6. Change permissions to allow gem downloads(this assumes that the user is in the wheel group)</p>
+<li>Change permissions to allow gem downloads(this assumes that the user is in the wheel group)</li>
 <p>$ sudo chgrp -R wheel /usr/local/lib/ruby/</p>
 <p>$ sudo chmod -R 775 /usr/local/lib/ruby/</p>
 <p>$ sudo chgrp -R wheel /usr/local/bin/</p>
@@ -129,7 +117,7 @@ $ sudo service postgresql-9.4 initdb</p>
 
 <p>An alternative method is to create symlinks.  See "ruby_source" role.</p>
 
-<p>7. Install Bundler gem</p>
+<li>Install Bundler gem</li>
 <p>$ gem install bundler</p>
 
 <h3>Part 2: Rails</h3>
@@ -151,4 +139,5 @@ While building this project I've used the following as references/guides:
 <li>Jeff Geerling, Ansible Galaxy: https://galaxy.ansible.com/list#/roles/470</li>
 <li>PG RPM Building Project - Yum Repository Howto: http://yum.postgresql.org/howtoyum.php</li>
 <li>Installing PostgreSQL on Red Hat Enterprise Linux / Fedora Core: see PG RPM Building Project</li>
+<li>https://fedoraproject.org/wiki/EPEL.</li>
 </ul>
