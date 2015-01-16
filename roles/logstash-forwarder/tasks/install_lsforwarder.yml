@@ -12,18 +12,15 @@
 
 - name: Configure /etc/sysconfig/logstash-forwarder
   sudo: yes
-  template: src=logstash-forwarder.j2 dest=/etc/sysconfig/logstash-forwarder #owner=root group=root mode=0775
+  template: src=logstash-forwarder.j2 dest=/etc/sysconfig/logstash-forwarder 
 
-#- name: Copy SSL certificate to the right location
-#  sudo: yes
-#  command: cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
-
-- name: Place the logstash ssl cert on the node
-  template: src=logstash-forwarder.crt.j2 dest=/etc/pki/tls/certs/logstash-forwarder.crt
+- name: Copy SSL certificate to the right location
+  sudo: yes
+  copy: src=tmp/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt owner=root group=root mode=0644
 
 - name: Configure the /etc/logstash-forwarder
   sudo: yes
-  template: src=server_forwarder.conf.j2 dest=/etc/logstash-forwarder #owner=root group=root mode=0664
+  template: src=server_forwarder.conf.j2 dest=/etc/logstash-forwarder
 
 - name: Add the Forwarder service
   raw: sudo chkconfig --add logstash-forwarder
@@ -31,5 +28,3 @@
 - name: Start the Forwarder service
   sudo: yes
   service: name=logstash-forwarder state=started enabled=yes
-#  notify:
-#    - restart elasticsearch
