@@ -28,7 +28,9 @@ Vagrant.configure(2) do |config|
     machine.vm.provision :ansible do |ansible|
       ansible.playbook = "site.yml"
       ansible.limit = 'all'
-      ansible.verbose = 'vvvv'
+#      ansible.verbose = 'v'
+#       ansible.start_at_task = "nginx | Configure Kibana for nginx"
+      ansible.sudo = true
 			ansible.groups = {
         "group1" => ["monitor"],
         "group2" => ["db"],

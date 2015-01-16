@@ -1,10 +1,6 @@
 ---
-- name: Download the Logstash Forwarder RPM
-  get_url: url=http://packages.elasticsearch.org/logstashforwarder/centos/logstash-forwarder-0.3.1-1.x86_64.rpm dest=/home/vagrant/
-
-- name: Install the Forwarder package
-  sudo: yes
-  command: rpm -ivh /home/vagrant/logstash-forwarder-0.3.1-1.x86_64.rpm
+- name: Install logstash-forwarder rpm from the remote repo
+  yum: name=http://packages.elasticsearch.org/logstashforwarder/centos/logstash-forwarder-0.3.1-1.x86_64.rpm state=present
 
 - name: Install Logstash Forwarder init script to /etc/init.d/logstash-forwarder
   sudo: yes
@@ -18,9 +14,12 @@
   sudo: yes
   template: src=logstash-forwarder.j2 dest=/etc/sysconfig/logstash-forwarder #owner=root group=root mode=0775
 
-- name: Copy SSL certificate to the right location
-  sudo: yes
-  command: cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+#- name: Copy SSL certificate to the right location
+#  sudo: yes
+#  command: cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+
+- name: Place the logstash ssl cert on the node
+  template: src=logstash-forwarder.crt.j2 dest=/etc/pki/tls/certs/
 
 - name: Configure the /etc/logstash-forwarder
   sudo: yes
@@ -32,5 +31,5 @@
 - name: Start the Forwarder service
   sudo: yes
   service: name=logstash-forwarder state=started enabled=yes
-  notify:
-    - restart elasticsearch
+#  notify:
+#    - restart elasticsearch

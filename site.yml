@@ -3,35 +3,14 @@
 
 - name: apply common configuration to all nodes
   hosts: all
-  remote_user: root
 
   roles:
     - common
-    - client_local_repo
-    - ntp
-
-- name: configure and deploy the web server and app server
-  hosts: web1
-  remote_user: root
-
-  roles:
-    - nginx
-    - ruby_source
-    - pg_client
-    - logstash-forwarder 
-
-
-- name: deploy PostgreSQL and configure the databases and users
-  hosts: db
-  remote_user: root
-
-  roles:
-    - pg
-    - logstash-forwarder 
+#    - client_local_repo
+#    - ntp
 
 - name: deploy and configure the monitoring service
   hosts: monitor
-  remote_user: root
 
   roles:
     - go
@@ -40,3 +19,21 @@
     - kibana
     - nginx
     - logstash
+
+- name: deploy PostgreSQL and configure the databases and users
+  hosts: db
+
+  roles:
+    - go
+    - pg
+    - logstash-forwarder 
+
+- name: configure and deploy the web server and app server
+  hosts: web1
+
+  roles:
+    - go  
+    - nginx
+#    - ruby_source
+    - pg_client
+    - logstash-forwarder 

@@ -16,7 +16,7 @@
 - name: Copy Kibana installation into a new directory - create directory
   sudo: yes
   #command: mkdir -p /var/www/kibana3
-  command: mkdir -p /usr/share/nginx/kibana3 user=root group=root mode=0644
+  command: mkdir -p /usr/share/nginx/kibana3 #owner=root group=root mode=0644
 
 - name: Copy Kibana installation into the new directory
   raw: sudo cp -R /home/vagrant/kibana-3.0.1/* /usr/share/nginx/kibana3/

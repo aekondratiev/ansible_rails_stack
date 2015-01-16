@@ -12,11 +12,11 @@
 <li>Kibana 3.0.1</li>
 </ul>
 
-<p>This is an in-progress Rails development environment I'm building with Vagrant/Ansible.  Below are all my notes from setting up this project.</p>
+<p>This is an in-progress Rails development environment I'm building with Vagrant/Ansible.  Below are my notes from setting up this project.</p>
 
 <p>Iteration-1</p>
 
-<p>I'll keep a general "To Do" list in this section and additional topic-specific lists in each section below.</p>
+<p>I'll keep a top level "To Do" list in this section and additional topic-specific lists in each section below.</p>
 
 <h4>To Do:</h4>
 <ul>
@@ -67,7 +67,6 @@ $ sudo systemctl start Nginx # for CentOS7
 </p>
 <h4>TO DO:</h4>
 <p><ul>
-<li>d. Set user permissions</li>
 </ul>
 </p>
 
@@ -85,10 +84,8 @@ $ sudo yum install -y http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-ce
 </p>
 <p>3. Grab the necessary packages:</p>
 <p>
-$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib
-</p>
-This installed dependencies: I needed libxslt
-</p>
+$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib</p>
+
 <p>4. Initialize the database cluster:</p>
 <p>
 $ sudo service postgresql-9.4 initdb</p>
@@ -99,7 +96,6 @@ $ sudo service postgresql-9.4 initdb</p>
 
 <h4>To Do:</h4>
 <ol>
-<li>Where is the PGP key?  Don't need it but install throws a warning without it.  If I could find it, would use "$ rpm -import http://link/to/key".  There is no warning when I use "yum install"</li>
 </ol>
 
 <h2>Configure Ruby/Rails</h2>
@@ -131,7 +127,7 @@ $ sudo service postgresql-9.4 initdb</p>
 <p>$ sudo chgrp -R wheel /usr/local/bin/</p>
 <p>$ sudo chmod -R 775 /usr/local/bin/</p>
 
-<p>An alternative method is to create symlinks.  See "rails" role.</p>
+<p>An alternative method is to create symlinks.  See "ruby_source" role.</p>
 
 <p>7. Install Bundler gem</p>
 <p>$ gem install bundler</p>
@@ -142,7 +138,6 @@ $ sudo service postgresql-9.4 initdb</p>
 <h4>To Do:</h4>
 <ul>
 <li>Add sha256sum to tarball download</li>
-<li>Should I have a "testrb" dir located in /usr/local/bin/?</li>
 </ul>
 
 <h2>Set Up Logstash Server</h2>
