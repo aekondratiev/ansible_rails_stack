@@ -19,7 +19,7 @@
 #  command: cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
 
 - name: Place the logstash ssl cert on the node
-  template: src=logstash-forwarder.crt.j2 dest=/etc/pki/tls/certs/
+  template: src=logstash-forwarder.crt.j2 dest=/etc/pki/tls/certs/logstash-forwarder.crt
 
 - name: Configure the /etc/logstash-forwarder
   sudo: yes

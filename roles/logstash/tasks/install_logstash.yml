@@ -37,5 +37,5 @@
 # Currently copies to localhost with cp not scp
 #- name: Copy the SSL Certificate to remote nodes
 #  sudo: yes
-#  command: scp -4 /etc/pki/tls/certs/logstash-forwarder.crt {{item}}:/tmp
+#  command: scp /etc/pki/tls/certs/logstash-forwarder.crt {{item}}:/tmp
 #  with_items: logstash_forwarder_clients
