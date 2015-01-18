@@ -1,7 +1,7 @@
 ---
 - name: Install logstash-forwarder rpm from the remote repo
   yum: name=http://packages.elasticsearch.org/logstashforwarder/centos/logstash-forwarder-0.3.1-1.x86_64.rpm state=present
-
+  
 - name: Install Logstash Forwarder init script to /etc/init.d/logstash-forwarder
   sudo: yes
   template: src=logstash-forwarder-init.j2 dest=/etc/init.d/logstash-forwarder
@@ -12,7 +12,7 @@
 
 - name: Configure /etc/sysconfig/logstash-forwarder
   sudo: yes
-  template: src=logstash-forwarder.j2 dest=/etc/sysconfig/logstash-forwarder 
+  template: src=logstash-forwarder.j2 dest=/etc/sysconfig/logstash-forwarder #owner=root group=root mode=0775
 
 - name: Copy SSL certificate to the right location
   sudo: yes
@@ -20,7 +20,7 @@
 
 - name: Configure the /etc/logstash-forwarder
   sudo: yes
-  template: src=server_forwarder.conf.j2 dest=/etc/logstash-forwarder
+  template: src=server_forwarder.conf.j2 dest=/etc/logstash-forwarder #owner=root group=root mode=0664
 
 - name: Add the Forwarder service
   raw: sudo chkconfig --add logstash-forwarder

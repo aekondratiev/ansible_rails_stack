@@ -1,7 +1,7 @@
 ---
 - name: Create a yum repository for Logstash
   sudo: yes
-  template: src=logstash.repo.j2 dest=/etc/yum.repos.d/logstash.repo
+  template: src=logstash.repo.j2 dest=/etc/yum.repos.d/logstash.repo # user=root group=root mode=0644
 
 - name: Install Logstash
   sudo: yes
@@ -18,15 +18,15 @@
 
 - name: Create Logstash Input Configuration file
   sudo: yes
-  template: src=01-lumberjack-input.conf.j2 dest=/etc/logstash/conf.d/01-lumberjack-input.conf 
+  template: src=01-lumberjack-input.conf.j2 dest=/etc/logstash/conf.d/01-lumberjack-input.conf #owner=root group=root mode=0644
 
 - name: Create a configuration file to filter syslog messages
   sudo: yes
-  template: src=10-syslog.conf.j2 dest=/etc/logstash/conf.d/10-syslog.conf 
+  template: src=10-syslog.conf.j2 dest=/etc/logstash/conf.d/10-syslog.conf #owner=root group=root mode=0644
   
 - name: Create a configuration file to filter output
   sudo: yes
-  template: src=30-lumberjack-output.conf.j2 dest=/etc/logstash/conf.d/30-lumberjack-output.conf
+  template: src=30-lumberjack-output.conf.j2 dest=/etc/logstash/conf.d/30-lumberjack-output.conf #owner=root group=root mode=0644 
   notify:
     - restart logstash
 

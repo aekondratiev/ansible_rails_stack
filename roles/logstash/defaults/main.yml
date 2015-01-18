@@ -1,4 +1,0 @@
----
-logstash_forwarder_clients: 
-  - vagrant@192.168.33.136
-  - vagrant@192.168.33.135

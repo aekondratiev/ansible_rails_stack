@@ -12,15 +12,15 @@
 <li>Kibana 3.0.1</li>
 </ul>
 
+<h3>Description:</h3>
 <p>This is an in-progress Rails development environment I'm building with Vagrant/Ansible.  Below are my notes from setting up this project and the manual instructions if you were building this at the command line.  I used CentOS 6.6 as my base but the ansible roles work with CentOS 7 too.</p>
 
 <p>Iteration-1: Create roles to congifure each VM--Finished</p>
 <p>Iteration-2: Add individual users; configure web/app and db servers --In progress</p>
 
-<p>I'll keep a top level "To Do" list in this section and additional topic-specific lists in each section below.</p>
-
-<h4>To Do:</h4>
+<h3>Requirements:</h3>
 <ul>
+<li>Ansible 1.8.2</li>
 </ul>
 
 <h2>The Plan</h2>
@@ -40,19 +40,19 @@ VMs (3): web/app server, db server, and monitoring service.
 <p>Plan: Install the packages that every node will use.</p>
 
 <p>1.  Install libselinux-python to enable Ansible's file/copy/template related functions.</p>
-<p>$ sudo yum install -y libselinux-python</p>
+<pre>$ sudo yum install -y libselinux-python</pre>
 
 <h2>Configure Nginx</h2>
 <p>Plan: We will need to enable the EPEL repo; download Nginx; create a config file; set firewall settings (if necessary); and start the Nginx service.</p>
 <ol>
 <li>Enable EPEL repository.</li>
 <p>Download the EPEL repo for CentOS 6 or 7 with the following command:</p>
-<p>$ sudo yum install epel-release -y</p>
+<pre>$ sudo yum install epel-release -y</pre>
 <li>Install Nginx package:</li>
-<p>$ sudo yum install Nginx -y</p>
+<pre>$ sudo yum install Nginx -y</pre>
 <li>Start the Nginx service</li>
-<p>$ sudo chkconfig Nginx on # for CentOS6</p>
-<p>$ sudo systemctl start Nginx # for CentOS7</p>
+<pre>$ sudo chkconfig Nginx on # for CentOS6</pre>
+<pre>$ sudo systemctl start Nginx # for CentOS7</pre>
 </p>
 </ol>
 
@@ -67,21 +67,18 @@ VMs (3): web/app server, db server, and monitoring service.
 <h4>Part 1: Install PG Server</h4>
 <ol>
 <li>Install pre-reqs:</li>
-<p>$ sudo yum install -y python-psycopg2 #Ansible needs this to talk to PG
-</p>
+<pre>$ sudo yum install -y python-psycopg2 #Ansible needs this to talk to PG</pre>
 <li>Enable PG repo:</li>
-<p>$ sudo yum install -y http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
-</p>
+<pre>$ sudo yum install -y http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm</pre>
 <li>Grab the necessary packages:</li>
-<p>$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib</p>
+<pre>$ sudo yum install -y postgresql94-libs postgresql94 postgresql94-server postgresql94-contrib</pre>
 
 <li>Initialize the database cluster:</li>
-<p>$ sudo service postgresql-9.4 initdb</p>
+<pre>$ sudo service postgresql-9.4 initdb</pre>
 
 <h4>Part 2: Install PG on Client</h4>
 <li>Create client role by repeating steps 1-3 with the following packages in step 3:</li>
-<p>$ sudo yum install -y postgresql94-libs postgresql94</p>
-
+<pre>$ sudo yum install -y postgresql94-libs postgresql94</pre>
 <h4>To Do:</h4>
 <ol>
 </ol>
@@ -91,34 +88,34 @@ VMs (3): web/app server, db server, and monitoring service.
 <p>Plan:  Install Ruby from source; install bundler; set up symlinks and shared ruby library.</p>
 
 <li>Install the prereqs:</li>
-<p>$ sudo yum install -y wget git gcc openssl-devel readline-devel zlib-devel libyaml-devel gcc-c++ patch automake libtool bison libffi-devel</p>
+<pre>$ sudo yum install -y wget git gcc openssl-devel readline-devel zlib-devel libyaml-devel gcc-c++ patch automake libtool bison libffi-devel</pre>
 
 <li>Get the latest stable Ruby tarball (2.2.0):</li>
-<p>$ wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz</p>
+<pre>$ wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz</pre>
 
 <li>Unpack the tarball</li>
-<p>$ tar -xzf ruby-2.2.0.tar.gz</p>
+<pre>$ tar -xzf ruby-2.2.0.tar.gz</pre>
 
 <li>Build Ruby</li>
-<p>$ ./ruby-2.2.0/configure --enable-shared; make; sudo make install</p>
+<pre>$ ./ruby-2.2.0/configure --enable-shared; make; sudo make install</pre>
 <p>Installs to "usr/local" by default</p>
 
 <li>Check for gem</li>
-<p>$ gem --version # should see 2.4.5</p>
+<pre>$ gem --version # should see 2.4.5</pre>
 
 <p>Config gem docs:</p>
-<p>$ echo 'gem: --no-rdoc --no-ri' > ~/.gemrc</p>
+<pre>$ echo 'gem: --no-rdoc --no-ri' > ~/.gemrc</pre>
 
 <li>Change permissions to allow gem downloads(this assumes that the user is in the wheel group)</li>
-<p>$ sudo chgrp -R wheel /usr/local/lib/ruby/</p>
-<p>$ sudo chmod -R 775 /usr/local/lib/ruby/</p>
-<p>$ sudo chgrp -R wheel /usr/local/bin/</p>
-<p>$ sudo chmod -R 775 /usr/local/bin/</p>
+<pre>$ sudo chgrp -R wheel /usr/local/lib/ruby/</pre>
+<pre>$ sudo chmod -R 775 /usr/local/lib/ruby/</pre>
+<pre>$ sudo chgrp -R wheel /usr/local/bin/</pre>
+<pre>$ sudo chmod -R 775 /usr/local/bin/</pre>
 
 <p>An alternative method is to create symlinks.  See "ruby_source" role.</p>
 
 <li>Install Bundler gem</li>
-<p>$ gem install bundler</p>
+<pre>$ gem install bundler</pre>
 
 <h3>Part 2: Rails</h3>
 <p>Plan: Install Rails 4</p>
@@ -129,7 +126,9 @@ VMs (3): web/app server, db server, and monitoring service.
 </ul>
 
 <h2>Set Up Logstash Server</h2>
-<p>Plan: Create an ELK (Elasticsearch, Logstash, Kibana) stack; set up Logstash forwarder on clients.</p>
+<p>Plan: Create an ELK (Elasticsearch, Logstash, Kibana) stack; set up Logstash-forwarder on clients.</p>
+
+<p>See my ELK stack project.</p>
 
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
