@@ -21,10 +21,12 @@
 <h3>Requirements:</h3>
 <ul>
 <li>Ansible 1.8.2</li>
+<li>Vagrant</li>
+<li>VirtualBox</li>
 </ul>
 
 <h2>The Plan</h2>
-VMs (3): web/app server, db server, and monitoring service.
+VMs (3): web/app server, db server, and monitoring server.
 
 <h3>Initial Setup:</h3>
 <ul>
@@ -128,7 +130,7 @@ VMs (3): web/app server, db server, and monitoring service.
 <h2>Set Up Logstash Server</h2>
 <p>Plan: Create an ELK (Elasticsearch, Logstash, Kibana) stack; set up Logstash-forwarder on clients.</p>
 
-<p>See my ELK stack project.</p>
+<p>See my ELK stack project, here: https://github.com/mjp182/ansible-Vagrant-ELK_Stack</p>
 
 <h3>Resources</h3>
 While building this project I've used the following as references/guides:
