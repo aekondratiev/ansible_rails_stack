@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Matthew Pontes
+  description: Install OpenJDK on CentOS 7
+  company: your company (optional)
+  license: license (BSD, MIT)
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+
+  categories:
+  - development
+  - system
+  - web
+dependencies: []

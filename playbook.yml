@@ -13,8 +13,8 @@
   hosts: monitor
 
   roles:
-    - java
-    - elastic
+    - java_jdk
+    - elasticsearch
     - kibana
     - nginx
     - logstash
@@ -23,7 +23,7 @@
   hosts: db
 
   roles:
-    - pg
+    - PostgreSQL
     - logstash-forwarder 
 
 - name: configure and deploy the web server and app server
@@ -31,6 +31,6 @@
 
   roles:
     - nginx
-#    - ruby_source
-    - pg_client
+    - rbenv_ruby
+    - postgres_client
     - logstash-forwarder 
