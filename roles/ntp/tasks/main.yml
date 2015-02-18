@@ -1,2 +1,5 @@
 ---
-- include: latest_ntp.yml
+- name: ensure ntpd is at the latest version
+  yum: name=ntp state=latest
+  notify:
+    - restart ntpd

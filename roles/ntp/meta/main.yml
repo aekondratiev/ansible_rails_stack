@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Matthew Pontes
+  description: Install and update NTP to latest version on CentOS 6/7.
+  company: your company (optional)
+  license: license (MIT)
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+
+  categories:
+  - system
+
+dependencies: []
