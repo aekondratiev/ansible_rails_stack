@@ -6,8 +6,7 @@
 
   roles:
     - common
-#    - client_local_repo
-#    - ntp
+    - ntp
 
 - name: deploy and configure the monitoring service
   hosts: monitor
