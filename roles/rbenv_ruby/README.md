@@ -1,40 +1,31 @@
-rbenv
-========
+Role Name
+=========
 
-Install rbenv, ruby-build, ruby and ~/.gemrc with following content:
-
-    gem: --no-document
-
-.gemrc can be overriden by adding file files/rbenv/.gemrc to the playbook.
+A brief description of the role goes here.
 
 Requirements
 ------------
 
-git, autoconf, bison, build-essential, libssl-dev, libyaml-dev, libreadline6, libreadline6-dev,
-zlib1g, zlib1g-dev. Requirements are installed by the role.
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
 
-* `rbenv.user` Remote user. Defaults to ansible `remote_user` or `sudo_user`
-* `rbenv.version` rbenv version tag, or `HEAD`. Defaults to `v0.4.0`
-* `rbenv.node_version` ruby version. Defaults to `2.0.0-p247`
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Dependencies
 ------------
 
-No depedencies.
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
 Example Playbook
--------------------------
+----------------
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
-        - role: rbenv
-          rbenv:
-            user: deploy
-            version: v0.4.0
-            ruby_version: 2.0.0-p247
+         - { role: username.rolename, x: 42 }
 
 License
 -------
@@ -44,4 +35,4 @@ BSD
 Author Information
 ------------------
 
-Jarno Keskikangas
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

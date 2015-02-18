@@ -1,20 +1,16 @@
 ---
 galaxy_info:
-  author: Jarno Keskikangas
-  description: Install rbenv and ruby.
+  author: Matthew Pontes
+  description: Install rbenv and ruby on CentOS 7.  Based on Debian/Ubuntu role by Jarno Keskikangas.
   company: Leonidas
-  license: BSD
+  license: MIT
   min_ansible_version: 1.4
+
   platforms:
-  - name: Ubuntu
+  - name: EL
     versions:
-     - precise
-     - quantal
-     - raring
-     - saucy
-  - name: Debian
-    versions:
-     - wheezy
+     - 7
+
   categories:
   - development
   - packaging
