@@ -1,4 +1,2 @@
 ---
-# Tasks for PostgreSQL
-- include: install_postgresql.yml
-- include: configure.yml
+# tasks file for pg

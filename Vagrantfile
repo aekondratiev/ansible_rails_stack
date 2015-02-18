@@ -32,10 +32,8 @@ Vagrant.configure(2) do |config|
     machine.vm.network "private_network", ip: PRIVATE_MONITOR_IP
 
     machine.vm.provision :ansible do |ansible|
-      ansible.playbook = "site.yml"
+      ansible.playbook = "playbook.yml"
       ansible.limit = 'all'
-#      ansible.verbose = 'v'
-#       ansible.start_at_task = ""
       ansible.sudo = true
 			ansible.groups = {
         "group1" => ["monitor"],
