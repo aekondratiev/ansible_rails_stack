@@ -5,7 +5,7 @@
   yum: name=python-psycopg2 state=present
 
 - name: Download the PostgreSQL repository
-  yum: name=http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm state=present
+  yum: name=http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm state=present
 
 - name: Install the PostgreSQL client packages
   yum: name={{ item }} state=present
