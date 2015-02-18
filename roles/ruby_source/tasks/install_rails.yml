@@ -1,3 +1,0 @@
----
-- name: Install Rails
-  gem: name=rails version={{rails_version}} state=present user_install=no
