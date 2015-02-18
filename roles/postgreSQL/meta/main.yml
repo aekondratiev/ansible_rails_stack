@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Matthew Pontes
+  description: Download and install PostgreSQL 9.4.  Initialize a cluster.
+  company: your company (optional)
+  license: license (MIT)
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+
+  categories:
+  - database
+  - database:sql
+
+dependencies: []

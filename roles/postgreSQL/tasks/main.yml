@@ -14,3 +14,5 @@
     - postgresql94-libs
     - postgresql94-contrib
     - postgresql94-server
+
+- include: configure.yml
