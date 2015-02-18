@@ -1,7 +1,7 @@
 <h1>Rails Development Stack 0.1.0</h1>
 <h4>In the box:</h4>
 <ul>
-<li>CentOS 6.6 x86_64</li>
+<li>CentOS 7 x86_64</li>
 <li>PostgreSQL 9.4</li>
 <li>Nginx</li>
 <li>Ruby 2.2.0p0</li>
