@@ -34,4 +34,6 @@
     - mjp182.nginx
     - mjp182.rbenv_ruby
     - mjp182.postgres_client
-    - mjp182.logstash-forwarder 
+    - mjp182.logstash-forwarder
+    #- mjp182.git_deploy 
+    - mjp182.nodejs

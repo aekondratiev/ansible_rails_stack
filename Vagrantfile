@@ -18,7 +18,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define :web1 do |web1|
-		web1.vm.hostname = 'web1'		
+		web1.vm.hostname = 'web1'
+    web1.vm.network "forwarded_port", guest: 3000, host: 3000		
     web1.vm.network "private_network", ip: PRIVATE_WEB_IP
   end
 
