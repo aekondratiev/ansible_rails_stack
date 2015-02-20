@@ -2,14 +2,14 @@
 # initialize, start, and configure PostgreSQL
 
 - name: Check whether PG cluster is already initialized
-  command: "sudo -iu postgres psql -V | grep 9.4.1"
+  command: "sudo systemctl status postgresql-9.4.service -l"
   register: pg_check_initialized
   changed_when: False
   ignore_errors: True
 
 - name: Initialize the database cluster
   command: /usr/pgsql-9.4/bin/postgresql94-setup initdb
-  when: "'9.4.1' not in pg_check_initialized.stdout"
+  when: "'is missing or empty.' in pg_check_initialized.stdout"
 
 - name: Start PostgreSQL and enable on boot
   service: name=postgresql-9.4 state=started enabled=yes

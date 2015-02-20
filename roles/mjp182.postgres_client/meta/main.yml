@@ -15,5 +15,4 @@ galaxy_info:
   - database
   - database:sql
 
-dependencies: 
-  - mjp182.postgreSQL 
+dependencies: []

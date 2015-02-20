@@ -5,7 +5,7 @@
   hosts: all
 
   roles:
-    - common
+    - mjp182.common
     - mjp182.ntp
 
 - name: deploy and configure the monitoring service
@@ -19,6 +19,7 @@
     - mjp182.logstash
 
 - name: deploy PostgreSQL and configure the databases and users
+  sudo: yes
   hosts: db
 
   roles:
@@ -26,6 +27,7 @@
     - mjp182.logstash-forwarder 
 
 - name: configure and deploy the web server and app server
+  sudo: yes
   hosts: web1
 
   roles:
