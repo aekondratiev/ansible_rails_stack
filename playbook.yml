@@ -2,6 +2,7 @@
 # This playbook deploys the whole application stack in this site.
 
 - name: apply common configuration to all nodes
+  sudo: yes
   hosts: all
 
   roles:

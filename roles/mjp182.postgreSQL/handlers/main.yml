@@ -1,2 +1,4 @@
 ---
-# handlers file for pg
+- name: restart postgresql server
+  sudo: yes
+  service: name=postgresql state=restarted

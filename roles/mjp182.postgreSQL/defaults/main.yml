@@ -1,2 +1,5 @@
 ---
-# defaults file for pg
+pg_remote_user: rails_user
+pg_remote_user_password: password
+#pg_remote_db_name: 
+

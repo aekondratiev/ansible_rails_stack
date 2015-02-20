@@ -2,14 +2,30 @@
 # initialize, start, and configure PostgreSQL
 
 - name: Check whether PG cluster is already initialized
-  command: "sudo systemctl status postgresql-9.4.service -l"
+  command: >
+    systemctl status postgresql-9.4.service
   register: pg_check_initialized
   changed_when: False
   ignore_errors: True
 
 - name: Initialize the database cluster
   command: /usr/pgsql-9.4/bin/postgresql94-setup initdb
-  when: "'is missing or empty.' in pg_check_initialized.stdout"
+  when: "'status=0/SUCCESS' not in pg_check_initialized.stdout"
 
 - name: Start PostgreSQL and enable on boot
   service: name=postgresql-9.4 state=started enabled=yes
+
+- name: Create postgresql user
+  sudo_user: postgres 
+  postgresql_user: name={{ pg_remote_user }} password={{ pg_remote_user_password }} role_attr_flags=CREATEDB,NOSUPERUSER
+
+
+- name: Copy postgresql client authentication config to server
+  sudo: yes
+  template: src=pg_hba.conf.j2 dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+  notify: restart postgresql-9.4
+
+- name: Copy postgresql configuration file to server
+  sudo: yes
+  template: src=postgresql.conf.j2 dest=/var/lib/pgsql/9.4/data/postgresql.conf
+  notify: restart postgresql
