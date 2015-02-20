@@ -6,30 +6,30 @@
 
   roles:
     - common
-    - ntp
+    - mjp182.ntp
 
 - name: deploy and configure the monitoring service
   hosts: monitor
 
   roles:
-    - java_jdk
-    - elasticsearch
-    - kibana
-    - nginx
-    - logstash
+    - mjp182.java_jdk
+    - mjp182.elasticsearch
+    - mjp182.kibana
+    - mjp182.nginx
+    - mjp182.logstash
 
 - name: deploy PostgreSQL and configure the databases and users
   hosts: db
 
   roles:
-    - PostgreSQL
-    - logstash-forwarder 
+    - mjp182.postgreSQL
+    - mjp182.logstash-forwarder 
 
 - name: configure and deploy the web server and app server
   hosts: web1
 
   roles:
-    - nginx
-    - rbenv_ruby
-    - postgres_client
-    - logstash-forwarder 
+    - mjp182.nginx
+    - mjp182.rbenv_ruby
+    - mjp182.postgres_client
+    - mjp182.logstash-forwarder 
