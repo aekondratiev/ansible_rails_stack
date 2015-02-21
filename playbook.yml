@@ -7,7 +7,7 @@
 
   roles:
     - mjp182.common
-    - mjp182.ntp
+#    - mjp182.ntp
 
 - name: deploy and configure the monitoring service
   hosts: monitor
@@ -25,7 +25,7 @@
 
   roles:
     - mjp182.postgreSQL
-    - mjp182.logstash-forwarder 
+    #- mjp182.logstash-forwarder 
 
 - name: configure and deploy the web server and app server
   sudo: yes

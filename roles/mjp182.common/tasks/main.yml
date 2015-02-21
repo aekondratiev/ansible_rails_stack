@@ -8,3 +8,4 @@
     - epel-release
     - libselinux-python
     - python-passlib
+    - net-tools
