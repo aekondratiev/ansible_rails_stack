@@ -1,4 +1,4 @@
-<h1>Rails Development Stack 0.2.0</h1>
+<h1>Rails Development Stack 0.3.0</h1>
 <h4>In the box:</h4>
 <ul>
 <li>CentOS 7 x86_64</li>
@@ -10,6 +10,7 @@
 <li>Elasticsearch 1.1.1</li>
 <li>Logstash 1.4.2</li>
 <li>Kibana 3.0.1</li>
+<li>Logstash-forwarder 0.4.0</li>
 </ul>
 
 <h3>Description:</h3>
