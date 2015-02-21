@@ -2,5 +2,5 @@
 - name: Ensure git is installed
   yum: name=git state=latest
 
-- name: Grab your project and install to home directory
-  git: repo={{ project_repo }} dest=/home/{{ git_user }}/
+#- name: Grab your project and install to home directory
+#  git: repo={{ project_repo }} dest=/home/{{ git_user }}/
